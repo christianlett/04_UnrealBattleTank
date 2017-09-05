@@ -2,6 +2,7 @@
 
 #include "Tank.h"
 #include "TankAimingComponent.h"
+#include "TankTurret.h"
 #include "TankBarrel.h"
 
 // Sets default values
@@ -11,6 +12,10 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+}
+
+void ATank::SetTurretReference(UTankTurret* TurretToSet) {
+	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet) {
