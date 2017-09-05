@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "TankAimingComponent.generated.h"
 
+// Forward declarations
 class UTankBarrel;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

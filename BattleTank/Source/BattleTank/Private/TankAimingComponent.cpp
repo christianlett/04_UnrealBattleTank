@@ -9,7 +9,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = true;	// TODO should this really tick?
 
 	// ...
 }
@@ -23,13 +23,27 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	if (!Barrel) { return; }
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
-
-	if (UGameplayStatics::SuggestProjectileVelocity(this, OUT OutLaunchVelocity, StartLocation, HitLocation, LaunchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace)) {
+	
+	auto CurrentTime = GetWorld()->GetTimeSeconds();
+	
+	if (UGameplayStatics::SuggestProjectileVelocity(this, 
+													OUT OutLaunchVelocity, 
+													StartLocation, 
+													HitLocation, 
+													LaunchSpeed, 
+													false, 
+													0, 
+													0, 
+													ESuggestProjVelocityTraceOption::DoNotTrace)) {
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		auto TankName = GetOwner()->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s"), *TankName, *AimDirection.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s"), *TankName, *AimDirection.ToString());
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solve found"), CurrentTime);
 
 		MoveBarrelTowards(AimDirection);
+	} else {
+		
+		UE_LOG(LogTemp, Error, TEXT("%f: No aim solve found"), CurrentTime);
 	}
 }
 
@@ -39,7 +53,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	UE_LOG(LogTemp, Warning, TEXT("DeltaRotator: %s"), *DeltaRotator.ToString());
+//	UE_LOG(LogTemp, Warning, TEXT("DeltaRotator: %s"), *DeltaRotator.ToString());
 	
 	Barrel->Elevate(5);
 }
