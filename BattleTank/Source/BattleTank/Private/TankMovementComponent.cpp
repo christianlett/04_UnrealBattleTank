@@ -21,3 +21,8 @@ void UTankMovementComponent::IntendTurnRight(float Throw) {
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 }
+
+void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)
+{
+	UE_LOG(LogTemp, Warning, TEXT("%s is moving with velocity %s"), *GetOwner()->GetName(), *MoveVelocity.ToString());
+}
