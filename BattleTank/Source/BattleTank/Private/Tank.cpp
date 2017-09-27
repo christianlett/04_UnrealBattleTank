@@ -12,6 +12,13 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
+
+	UE_LOG(LogTemp, Warning, TEXT("CJL Tank.cpp Constructor"));
+}
+
+void ATank::BeginPlay() {
+	Super::BeginPlay();	// Required for Blueprint BeginPlay!
+	UE_LOG(LogTemp, Warning, TEXT("CJL Tank.cpp BeginPlay"));
 }
 
 void ATank::Fire()

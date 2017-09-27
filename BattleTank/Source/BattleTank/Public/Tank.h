@@ -23,6 +23,8 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
+	virtual void BeginPlay() override;
+
 	UFUNCTION(BlueprintCallable)
 	void Fire();
 
