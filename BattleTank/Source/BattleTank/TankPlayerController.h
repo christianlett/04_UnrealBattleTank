@@ -10,7 +10,6 @@
 #define OUT
 
 // Forward declarations
-class ATank;
 class UTankAimingComponent;
 
 /**
@@ -30,7 +29,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
-
 public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -39,15 +37,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	ATank* GetControlledTank() const;
-
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
-		void FoundAimingComponent(UTankAimingComponent* AimCompRef);
+	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
-	
-	
 	// Start the tank moving the barrel so that a shot would hit where the crosshair intersects the world
 	void AimTowardsCrosshair();
 
