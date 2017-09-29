@@ -7,11 +7,6 @@
 #include "UObjectGlobals.h"
 #include "Tank.generated.h"
 
-// Forward declarations
-class UTankTurret;
-class UTankBarrel;
-class AProjectile;
-
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -19,25 +14,5 @@ class BATTLETANK_API ATank : public APawn
 
 public:
 	// Sets default values for this pawn's properties
-	ATank();
-
-	virtual void BeginPlay() override;
-
-	UFUNCTION(BlueprintCallable)
-	void Fire();
-public:	
-	// TODO: remove once this has been removed from aiming dependency
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 8000;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 3;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<AProjectile> ProjectileBlueprint;
-
-private:
-	UTankBarrel* Barrel = nullptr;
-	
-	double LastFireTime = 0;
+	ATank();	
 };
