@@ -22,6 +22,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-private:
-	float AcceptanceRadius = 3000;
+protected:
+	// How close the AI tank can get
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 8000;
 };

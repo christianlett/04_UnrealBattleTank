@@ -14,7 +14,8 @@ UENUM()
 enum class EFiringStatus : uint8 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 // Forward declarations
@@ -34,10 +35,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
+	EFiringStatus GetFiringStatus() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int GetNumRoundsLeft() const;
+
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
@@ -55,6 +61,8 @@ private:
 	UTankBarrel* Barrel = nullptr;
 
 	double LastFireTime = 0;
+
+	int NumRoundsLeft = 3;
 
 	FVector AimDirection;
 

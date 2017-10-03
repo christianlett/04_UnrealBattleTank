@@ -22,7 +22,10 @@ void UTankAimingComponent::BeginPlay() {
 }
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) {
+	if (NumRoundsLeft <= 0) {
+		FiringStatus = EFiringStatus::OutOfAmmo;
+		NumRoundsLeft = 0;
+	} else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) {
 		FiringStatus = EFiringStatus::Reloading;
 	}
 	else if (IsBarrelMoving()) {
@@ -39,6 +42,13 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 }
 
 
+EFiringStatus UTankAimingComponent::GetFiringStatus() const {
+	return FiringStatus;
+}
+
+int UTankAimingComponent::GetNumRoundsLeft() const {
+	return NumRoundsLeft;
+}
 
 void UTankAimingComponent::AimAt(FVector HitLocation) {
 	if (!ensure(Barrel)) { return; }
@@ -89,7 +99,7 @@ bool UTankAimingComponent::IsBarrelMoving() {
 
 void UTankAimingComponent::Fire()
 {
-	if (FiringStatus != EFiringStatus::Reloading) {
+	if (FiringStatus == EFiringStatus::Locked || FiringStatus == EFiringStatus::Aiming) {
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBlueprint)) { return; }
 		
@@ -100,5 +110,6 @@ void UTankAimingComponent::Fire()
 
 		LastFireTime = FPlatformTime::Seconds();
 	
+		NumRoundsLeft --;
 	}
 }
