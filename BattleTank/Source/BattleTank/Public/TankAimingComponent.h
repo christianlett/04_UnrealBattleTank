@@ -38,7 +38,7 @@ public:
 	EFiringStatus GetFiringStatus() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	int GetNumRoundsLeft() const;
+	int32 GetNumRoundsLeft() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void AimAt(FVector HitLocation);
@@ -62,7 +62,8 @@ private:
 
 	double LastFireTime = 0;
 
-	int NumRoundsLeft = 3;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 NumRoundsLeft = 3;
 
 	FVector AimDirection;
 
