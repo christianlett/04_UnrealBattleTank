@@ -30,6 +30,10 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
 public:
+	void SetPawn(APawn * InPawn);
+
+	UFUNCTION()
+	void OnPosessedTankDeath();
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
